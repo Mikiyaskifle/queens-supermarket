@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import Footer from './components/Footer'
 import Navbar from './components/Navbar'
 import ScrollToTopButton from './components/ScrollToTopButton'
 import { CartProvider } from './context/cart'
@@ -168,6 +169,7 @@ export default function App() {
                   />
                 </Routes>
               </AnimatePresence>
+              <Footer />
               <ScrollToTopButton />
             </div>
           </CartProvider>

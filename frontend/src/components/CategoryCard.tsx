@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion'
-import type { LucideIcon } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { cn } from '../lib/cn'
 
 type Props = {
   title: string
   subtitle: string
-  icon: LucideIcon
+  image: string
   onClick?: () => void
   className?: string
 }
@@ -13,41 +13,54 @@ type Props = {
 export default function CategoryCard({
   title,
   subtitle,
-  icon: Icon,
+  image,
   onClick,
   className,
 }: Props) {
   return (
     <motion.button
       type="button"
-      whileHover={{ y: -2, scale: 1.01 }}
+      whileHover={{ y: -3, scale: 1.02 }}
       whileTap={{ scale: 0.99 }}
-      transition={{ type: 'spring', stiffness: 520, damping: 28 }}
+      transition={{ type: 'spring', stiffness: 480, damping: 26 }}
       onClick={onClick}
       className={cn(
-        'glass ring-gold rounded-3xl p-5 text-left focus-gold',
+        'group relative overflow-hidden rounded-3xl text-left focus-gold',
         'hover:shadow-glowGold',
         className,
       )}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <div className="font-display text-base font-bold text-slate-900 dark:text-white">
-            {title}
-          </div>
-          <div className="mt-1 text-sm text-slate-600 dark:text-slate-300">
+      {/* Background image */}
+      <div className="relative h-44 sm:h-48 w-full overflow-hidden">
+        <img
+          src={image}
+          alt={title}
+          loading="lazy"
+          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.07]"
+        />
+        {/* Gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+        {/* Gold shimmer on hover */}
+        <div className="absolute inset-0 bg-gradient-to-br from-gold-500/0 to-gold-500/0 group-hover:from-gold-500/10 group-hover:to-transparent transition-all duration-500" />
+      </div>
+
+      {/* Text overlay */}
+      <div className="absolute bottom-0 left-0 right-0 p-4">
+        <div className="font-display text-base font-extrabold tracking-tight text-white drop-shadow">
+          {title}
+        </div>
+        <div className="mt-0.5 flex items-center justify-between">
+          <div className="text-xs font-medium text-white/80">
             {subtitle}
           </div>
-        </div>
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gold-500/15 dark:bg-gold-500/10 border border-gold-500/30">
-          <Icon className="h-5 w-5 text-gold-500" />
+          <div className="flex items-center gap-1 rounded-full bg-gold-500/90 px-2.5 py-1 text-[11px] font-extrabold tracking-wide text-slate-900 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            Explore <ArrowRight className="h-3 w-3" />
+          </div>
         </div>
       </div>
-      <div className="mt-4 h-px w-full bg-gradient-to-r from-gold-500/40 via-white/30 to-transparent dark:via-white/10" />
-      <div className="mt-3 text-xs font-semibold tracking-wide text-royal-700 dark:text-gold-300">
-        Explore →
-      </div>
+
+      {/* Gold border ring on hover */}
+      <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-white/10 group-hover:ring-gold-500/40 transition-all duration-300" />
     </motion.button>
   )
 }
-
